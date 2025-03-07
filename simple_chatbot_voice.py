@@ -24,11 +24,11 @@ def speech_to_text():
     return None
 
 
-# Initialize TTS engine
-tts_engine = pyttsx3.init() 
-tts_engine.setProperty('rate', 150)      # set speech property
 # TTS
 def text_to_speech(text):
+    # Initialize TTS engine
+    tts_engine = pyttsx3.init() 
+    tts_engine.setProperty('rate', 150)      # set speech property
     tts_engine.say(text)
     tts_engine.runAndWait()              # Run and wait for the speech to finish
     if tts_engine._inLoop:               # End the loop (keep the engine running will cause runtime error)
@@ -91,6 +91,8 @@ if input_option == "Voice":
 else:
     if prompt := st.chat_input():
         msg = handle_user_input(prompt)
-        if st.button("Hear the Response"):
-            text_to_speech(msg)
         
+if input_option == "Text" and st.button("Hear the Response"):
+    # print("button click: ",st.session_state["messages"][-1]["content"])
+    msg = st.session_state["messages"][-1]["content"]
+    text_to_speech(msg)
